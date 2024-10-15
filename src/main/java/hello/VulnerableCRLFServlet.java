@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 public class VulnerableCRLFServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -16,7 +17,7 @@ public class VulnerableCRLFServlet extends HttpServlet {
         userCookie.setHttpOnly(true);  // Adds HttpOnly flag for better security
         
         // Vulnerable to CWE-113: User input is directly added to the cookie value without sanitization
-        response.addCookie(userCookie);
+        response.addCookie(URLEncoder.encode(userCookie, Charset.defaultCharset()));
         response.getWriter().write("Cookie set with user input.");
     }
 }
